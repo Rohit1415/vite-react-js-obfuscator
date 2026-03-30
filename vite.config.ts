@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react";
 import JavaScriptObfuscator from "javascript-obfuscator";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => {
   const isProd = mode === "production";
@@ -66,9 +67,11 @@ export default defineConfig(({ mode }) => {
   });
 
   return {
-    plugins: [react(), isProd ? obfuscatorPlugin() : null].filter(
-      Boolean,
-    ) as Plugin[],
+    plugins: [
+      react(),
+      tailwindcss(),
+      isProd ? obfuscatorPlugin() : null,
+    ].filter(Boolean) as Plugin[],
 
     build: {
       minify: "terser",
@@ -104,12 +107,12 @@ export default defineConfig(({ mode }) => {
       },
     },
     server: {
-      port: 3000,
+      port: 8080,
       open: true,
       strictPort: true,
     },
     preview: {
-      port: 3000,
+      port: 8080,
       open: true,
       strictPort: true,
     },
